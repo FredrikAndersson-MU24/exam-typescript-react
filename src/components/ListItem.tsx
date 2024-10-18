@@ -11,8 +11,7 @@ const ListItem = (props: Task) => {
   return (
     <>
       <li
-        key={props.id}
-        value={props.value}
+        value={className}
         onClick={() => {
           setStatus(!status);
         }}

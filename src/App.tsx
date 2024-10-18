@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Button from "./components/Button";
 import InputTextField from "./components/InputTextField";
 import List from "./components/List";
@@ -7,23 +7,48 @@ import ListItem from "./components/ListItem";
 import "./style/style.css";
 
 export interface Task {
-  id: number;
   name: string;
   value: string;
 }
 
 function App() {
   const [text, setText] = useState<string>("");
-  const [array, setArray] = useState<Array<Task>>([]);
+  const [tasksArray, setTasksArray] = useState<Array<Task>>([]);
   const [warning, setWarning] = useState<string>("");
+  const isMounted = useRef(false);
+
+  const handleAddTask = () => {
+    if (text.trim() !== "") {
+      setTasksArray((a) => [...a, { name: text.trim(), value: "todo" }]);
+      setText("");
+    } else {
+      setWarning("Input valid text!");
+      setTimeout(() => {
+        setWarning(""), 100;
+      });
+    }
+  };
 
   useEffect(() => {
-    console.log(array);
-  }, [array]);
+    const arrayFromLS = JSON.parse(localStorage.getItem("tasks") as string);
+    if (arrayFromLS && Array.isArray(arrayFromLS)) {
+      console.log("loading from local storage");
+      setTasksArray(arrayFromLS);
+    }
+  }, []);
 
   useEffect(() => {
-    console.log(warning);
-  }, [warning]);
+    if (isMounted.current) {
+      if (tasksArray) {
+        console.log("saving to local storage");
+        localStorage.setItem("tasks", JSON.stringify(tasksArray));
+      }
+    } else {
+      isMounted.current = true;
+    }
+  }, [tasksArray]);
+
+  useEffect(() => {}, [warning]);
 
   return (
     <main className="wrapper">
@@ -37,40 +62,21 @@ function App() {
               setText(e.target.value);
             }}
           />
-          <Button
-            text="+"
-            onclick={() => {
-              if (text.trim() !== "") {
-                setArray((a) => [
-                  ...a,
-                  { name: text.trim(), id: array.length + 1, value: "todo" },
-                ]);
-              } else {
-                setWarning("Input valid text!");
-                setTimeout(() => {
-                  setWarning(""), 100;
-                });
-              }
-            }}
-            class="button-add"
-          />
+          <Button text="+" onclick={() => handleAddTask()} class="button-add" />
         </div>
 
         <List
-          li={array.map((item: any) => {
-            return (
-              <ListItem
-                key={item.id}
-                name={item.name}
-                id={item.id}
-                value={item.value}
-              />
-            );
+          li={tasksArray.map((item: any, index) => {
+            return <ListItem key={index} name={item.name} value={item.value} />;
           })}
         />
       </section>
 
-      <Button text="CLEAR" onclick={() => setArray([])} class="button-clear" />
+      <Button
+        text="CLEAR"
+        onclick={() => setTasksArray([])}
+        class="button-clear"
+      />
     </main>
   );
 }
