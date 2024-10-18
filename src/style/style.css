@@ -1,0 +1,130 @@
+:root {
+  box-sizing: border-box;
+  --font-family: "Courier New", Courier, monospace;
+}
+
+body {
+  background-color: hsl(0, 0, 10);
+}
+
+h1 {
+  font-family: var(--font-family);
+  font-size: 3rem;
+  color: aliceblue;
+}
+
+li {
+  font-family: var(--font-family);
+  min-height: 2rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  list-style-type: none;
+  background-color: hsl(289, 100%, 85%);
+  margin-bottom: 0.1rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 2rem;
+}
+
+li:hover {
+  background-color: hsl(289, 100%, 90%);
+}
+li:active {
+  background-color: hsl(289, 100%, 70%);
+}
+
+ul {
+  height: 400px;
+  overflow: auto;
+  padding: 0;
+  overflow-x: hidden;
+  margin-top: 0;
+}
+
+input {
+  height: 60px;
+  min-width: 70%;
+  font-family: var(--font-family);
+  font-weight: bold;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 3rem;
+  padding: 0;
+  padding-left: 1rem;
+  color: black;
+  flex-grow: 1;
+}
+
+button {
+  font-family: var(--font-family);
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+}
+
+.button-add {
+  background-color: hsl(110, 100%, 60%);
+  border: none;
+  font-weight: bold;
+  font-size: 3rem;
+  flex-shrink: 0;
+}
+
+.button-add:hover {
+  background-color: hsla(110, 100%, 70%);
+}
+.button-add:active {
+  background-color: hsla(110, 100%, 50%);
+}
+.button-clear {
+  background-color: hsla(26, 100%, 50%);
+  font-size: 1.4rem;
+  width: fit-content;
+}
+.button-clear:active {
+  background-color: hsla(26, 100%, 40%);
+}
+.button-clear:hover {
+  background-color: hsla(26, 100%, 60%);
+}
+
+main {
+  background-color: hsla(286, 100%, 25%, 0.798);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 400px;
+  max-width: 800px;
+  padding: 1rem;
+  border-radius: 3rem;
+  user-select: none;
+}
+
+.input-wrapper {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: fit-content;
+  border: none;
+  /* border-style: groove; */
+  border-radius: 3rem;
+  margin-bottom: 0.1rem;
+  padding: 0;
+}
+.input-list-wrapper {
+  background-color: lightcyan;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 3rem;
+  padding: 1rem;
+}
+
+.li-todo {
+  text-decoration: none;
+}
+.li-done {
+  text-decoration: line-through;
+  color: lightgrey;
+}
