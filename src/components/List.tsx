@@ -1,5 +1,5 @@
 interface ListProps {
-  li: any;
+  li: React.ReactNode;
 }
 
 const List = (props: ListProps) => {
