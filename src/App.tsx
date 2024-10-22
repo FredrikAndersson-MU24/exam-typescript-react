@@ -44,62 +44,54 @@ function App() {
   }, [tasks]);
 
   return (
-    <>
-      <header>
-        <Title />
-      </header>
-      <main className="wrapper">
-        <section className="input-list-wrapper">
-          <form className="input-wrapper">
-            <InputTextField
-              type="search"
-              placeholder="Add..."
-              onchange={(e) => {
-                setText(e.target.value);
-              }}
-            />
-            <Button
-              text="+"
-              onclick={() => handleAddTask()}
-              class="button-add"
-            />
-          </form>
-          {tasks.length ? (
-            <List
-              li={tasks.map((item: any) => {
-                return (
-                  <ListItem
-                    key={item.id}
-                    id={item.id}
-                    name={item.name}
-                    checked={item.checked}
-                    style={
-                      item.checked
-                        ? {
-                            textDecoration: "line-through",
-                            color: "gray",
-                          }
-                        : undefined
-                    }
-                    onchange={() => handleCheckTask(item.id)}
-                    clickLabel={() => handleCheckTask(item.id)}
-                    clickDelete={() => handleDeleteTask(item.id)}
-                  />
-                );
-              })}
-            />
-          ) : (
-            <p className="empty-list-message">No tasks</p>
-          )}
-        </section>
+    <main className="wrapper">
+      <Title />
+      <section className="input-list-wrapper">
+        <form className="input-wrapper">
+          <InputTextField
+            type="search"
+            placeholder="Add..."
+            onchange={(e) => {
+              setText(e.target.value);
+            }}
+          />
+          <Button text="+" onclick={() => handleAddTask()} class="button-add" />
+        </form>
+        {tasks.length ? (
+          <List
+            li={tasks.map((item: any) => {
+              return (
+                <ListItem
+                  key={item.id}
+                  id={item.id}
+                  name={item.name}
+                  checked={item.checked}
+                  style={
+                    item.checked
+                      ? {
+                          textDecoration: "line-through",
+                          color: "gray",
+                        }
+                      : undefined
+                  }
+                  onchange={() => handleCheckTask(item.id)}
+                  clickLabel={() => handleCheckTask(item.id)}
+                  clickDelete={() => handleDeleteTask(item.id)}
+                />
+              );
+            })}
+          />
+        ) : (
+          <p className="empty-list-message">No tasks</p>
+        )}
+      </section>
 
-        <Button
-          text="EMPTY LIST"
-          onclick={() => setTasks([])}
-          class="button-clear"
-        />
-      </main>
-    </>
+      <Button
+        text="EMPTY LIST"
+        onclick={() => setTasks([])}
+        class="button-clear"
+      />
+    </main>
   );
 }
 
