@@ -19,7 +19,7 @@ body {
 main {
   margin: auto;
   min-width: 400px;
-  max-width: 1200px;
+
   background-color: var(--background-color);
   display: flex;
   flex-direction: column;
@@ -28,7 +28,9 @@ main {
   user-select: none;
   border: 10px solid black;
 }
+
 h1 {
+  margin: 0;
   font-family: var(--font-family);
   font-size: 3rem;
   color: var(--font-color);
@@ -86,11 +88,22 @@ li:active {
   .input-list-wrapper {
     display: flex;
     flex-direction: row-reverse;
-    flex-grow: 1;
-    background-color: var(--ul-background-color);
-    width: 100%;
-    height: 600px;
-    padding: 1rem;
+  }
+  main {
+    min-width: 400px;
+    max-width: 1200px;
+    height: auto;
+  }
+}
+@media (max-height: 420px) {
+  .input-list-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    max-height: 80%;
+  }
+  main {
+    min-width: 400px;
+    height: 100vh;
   }
 }
 .input-text {
