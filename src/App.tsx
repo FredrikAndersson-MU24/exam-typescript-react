@@ -9,18 +9,7 @@ import "./style/style.css";
 interface Task {
   id: number;
   name: string;
-  value: string;
   checked: boolean;
-}
-export interface ListItemProps {
-  id: number;
-  name: string;
-  value: string;
-  checked: boolean;
-  style: React.CSSProperties | undefined;
-  onchange: React.ChangeEventHandler<HTMLInputElement>;
-  clickLabel: React.MouseEventHandler<HTMLElement>;
-  clickDelete: React.MouseEventHandler<HTMLElement> | undefined;
 }
 
 function App() {
@@ -32,11 +21,7 @@ function App() {
 
   const handleAddTask = () => {
     if (text.trim() !== "") {
-      setTasks((a) => [
-        ...a,
-        { id: id, name: text.trim(), value: "todo", checked: false },
-      ]);
-      setText("");
+      setTasks((a) => [...a, { id: id, name: text.trim(), checked: false }]);
     }
   };
 
@@ -59,56 +44,62 @@ function App() {
   }, [tasks]);
 
   return (
-    <main className="wrapper">
-      <Title />
+    <>
+      <header>
+        <Title />
+      </header>
+      <main className="wrapper">
+        <section className="input-list-wrapper">
+          <form className="input-wrapper">
+            <InputTextField
+              type="search"
+              placeholder="Add..."
+              onchange={(e) => {
+                setText(e.target.value);
+              }}
+            />
+            <Button
+              text="+"
+              onclick={() => handleAddTask()}
+              class="button-add"
+            />
+          </form>
+          {tasks.length ? (
+            <List
+              li={tasks.map((item: any) => {
+                return (
+                  <ListItem
+                    key={item.id}
+                    id={item.id}
+                    name={item.name}
+                    checked={item.checked}
+                    style={
+                      item.checked
+                        ? {
+                            textDecoration: "line-through",
+                            color: "gray",
+                          }
+                        : undefined
+                    }
+                    onchange={() => handleCheckTask(item.id)}
+                    clickLabel={() => handleCheckTask(item.id)}
+                    clickDelete={() => handleDeleteTask(item.id)}
+                  />
+                );
+              })}
+            />
+          ) : (
+            <p className="empty-list-message">No tasks</p>
+          )}
+        </section>
 
-      <section className="input-list-wrapper">
-        <form className="input-wrapper">
-          <InputTextField
-            type="search"
-            placeholder="Add..."
-            onchange={(e) => {
-              setText(e.target.value);
-            }}
-          />
-          <Button text="+" onclick={() => handleAddTask()} class="button-add" />
-        </form>
-        {tasks.length ? (
-          <List
-            li={tasks.map((item: any) => {
-              return (
-                <ListItem
-                  key={item.id}
-                  id={item.id}
-                  name={item.name}
-                  value={item.value}
-                  checked={item.checked}
-                  style={
-                    item.checked
-                      ? {
-                          textDecoration: "line-through",
-                          color: "gray",
-                        }
-                      : undefined
-                  }
-                  onchange={() => handleCheckTask(item.id)}
-                  clickLabel={() => handleCheckTask(item.id)}
-                  clickDelete={() => handleDeleteTask(item.id)}
-                />
-              );
-            })}
-          />
-        ) : (
-          <p className="empty-list-message">No tasks</p>
-        )}
-      </section>
-
-      <Button
-        text="EMPTY LIST"
-        onclick={() => setTasks([])}
-        class="button-clear"
-      />
-    </main>
+        <Button
+          text="EMPTY LIST"
+          onclick={() => setTasks([])}
+          class="button-clear"
+        />
+      </main>
+    </>
   );
 }
 

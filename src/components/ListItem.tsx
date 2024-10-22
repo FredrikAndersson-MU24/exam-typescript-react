@@ -1,5 +1,14 @@
-import { ListItemProps } from "../App";
 import Button from "./Button";
+
+interface ListItemProps {
+  id: number;
+  name: string;
+  checked: boolean;
+  style: React.CSSProperties | undefined;
+  onchange: React.ChangeEventHandler<HTMLInputElement>;
+  clickLabel: React.MouseEventHandler<HTMLElement>;
+  clickDelete: React.MouseEventHandler<HTMLElement>;
+}
 const ListItem = (props: ListItemProps) => {
   return (
     <>
