@@ -91,7 +91,7 @@ function App() {
           <TextInput type="text" onchange={(e) => setTitle(e.target.value)} />
           <TextArea onchange={(e) => setText(e.target.value)} />
           <div className="button-wrapper">
-            <Button text="+ Add" class="button-add" />
+            <Button text="+ Add" class="button-add" type="submit" />
             <Button
               text="Empty list"
               onclick={(e) => {
