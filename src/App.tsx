@@ -91,6 +91,7 @@ function App() {
           <TextInput type="text" onchange={(e) => setTitle(e.target.value)} />
           <TextArea onchange={(e) => setText(e.target.value)} />
           <div className="button-wrapper">
+            <Button text="+ Add" class="button-add" />
             <Button
               text="Empty list"
               onclick={(e) => {
@@ -98,7 +99,6 @@ function App() {
               }}
               class="button-empty"
             />
-            <Button text="+ Add" class="button-add" />
           </div>
         </form>
         <CircleButton onclick={() => setShowHide(!showHide)} state={showHide} />
