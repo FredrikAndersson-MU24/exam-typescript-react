@@ -1,37 +1,41 @@
-import Button from "./Button";
+import { MdDeleteOutline } from "react-icons/md";
 
 interface ListItemProps {
   id: number;
-  name: string;
+  title: string;
+  text: string;
   checked: boolean;
   style: React.CSSProperties | undefined;
   onchange: React.ChangeEventHandler<HTMLInputElement>;
-  clickLabel: React.MouseEventHandler<HTMLElement>;
-  clickDelete: React.MouseEventHandler<HTMLElement>;
+  clickDelete: React.MouseEventHandler;
 }
 const ListItem = (props: ListItemProps) => {
   return (
     <>
       <li key={props.id}>
+        <details className="details" name="details">
+          <summary
+            className="details-summary"
+            style={
+              props.checked
+                ? { textDecoration: "line-through" }
+                : { textDecoration: "none" }
+            }
+          >
+            {props.title}
+          </summary>
+          <p>{props.text}</p>
+
+          <MdDeleteOutline
+            className="button-trash"
+            onClick={props.clickDelete}
+          />
+        </details>
         <input
-          id={props.id.toString()}
           type="checkbox"
-          onChange={props.onchange}
+          id={props.id.toString()}
           checked={props.checked}
-          className="checkbox"
-        />
-        <label
-          style={props.style}
-          htmlFor={props.id.toString()}
-          className="li-todo"
-          onClick={() => props.clickLabel}
-        >
-          {props.name}
-        </label>
-        <Button
-          text="&#10799;"
-          onclick={props.clickDelete}
-          class="button-del"
+          onChange={props.onchange}
         />
       </li>
     </>

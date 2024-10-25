@@ -1,27 +1,36 @@
 import { useEffect, useState } from "react";
 import Button from "./components/Button";
-import InputTextField from "./components/InputTextField";
 import List from "./components/List";
-import Title from "./components/Title";
+import Header from "./components/Header";
 import ListItem from "./components/ListItem";
 import "./style/style.css";
+import TextArea from "./components/TextArea";
+import CircleButton from "./components/CircleButton";
+import TextInput from "./components/TextInput";
+import Footer from "./components/Footer";
 
 interface Task {
   id: number;
-  name: string;
+  title: string;
+  text: string;
   checked: boolean;
 }
 
 function App() {
+  const [title, setTitle] = useState<string>("");
   const [text, setText] = useState<string>("");
   const [tasks, setTasks] = useState<Array<Task>>(
     JSON.parse((localStorage.getItem("tasks") as string) || "[]")
   );
   const id = tasks.length ? tasks[tasks.length - 1].id + 1 : 1;
+  const [showHide, setShowHide] = useState<boolean>(false);
 
   const handleAddTask = () => {
     if (text.trim() !== "") {
-      setTasks((a) => [...a, { id: id, name: text.trim(), checked: false }]);
+      setTasks((a) => [
+        ...a,
+        { id: id, title: title.trim(), text: text.trim(), checked: false },
+      ]);
     }
   };
 
@@ -37,6 +46,7 @@ function App() {
     setTasks(tempArray);
   };
 
+  // Save to local storage
   useEffect(() => {
     if (tasks) {
       localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -44,27 +54,18 @@ function App() {
   }, [tasks]);
 
   return (
-    <main className="wrapper">
-      <Title />
-      <section className="input-list-wrapper">
-        <form className="input-wrapper">
-          <InputTextField
-            type="search"
-            placeholder="Add..."
-            onchange={(e) => {
-              setText(e.target.value);
-            }}
-          />
-          <Button text="+" onclick={() => handleAddTask()} class="button-add" />
-        </form>
-        {tasks.length ? (
+    <>
+      <div className="wrapper">
+        <Header />
+        <div className="list-wrapper">
           <List
             li={tasks.map((item: any) => {
               return (
                 <ListItem
                   key={item.id}
                   id={item.id}
-                  name={item.name}
+                  title={item.title}
+                  text={item.text}
                   checked={item.checked}
                   style={
                     item.checked
@@ -75,23 +76,36 @@ function App() {
                       : undefined
                   }
                   onchange={() => handleCheckTask(item.id)}
-                  clickLabel={() => handleCheckTask(item.id)}
                   clickDelete={() => handleDeleteTask(item.id)}
                 />
               );
             })}
           />
-        ) : (
-          <p className="empty-list-message">No tasks</p>
-        )}
-      </section>
+        </div>
 
-      <Button
-        text="EMPTY LIST"
-        onclick={() => setTasks([])}
-        class="button-clear"
-      />
-    </main>
+        <form
+          action="submit"
+          className="input-card"
+          style={showHide ? { display: "flex" } : { display: "none" }}
+          onSubmit={handleAddTask}
+        >
+          <TextInput type="text" onchange={(e) => setTitle(e.target.value)} />
+          <TextArea onchange={(e) => setText(e.target.value)} />
+          <div className="button-wrapper">
+            <Button
+              text="Empty list"
+              onclick={(e) => {
+                e.preventDefault(), setTasks([]);
+              }}
+              class="button-empty"
+            />
+            <Button text="+ Add" class="button-add" />
+          </div>
+        </form>
+        <CircleButton onclick={() => setShowHide(!showHide)} state={showHide} />
+        <Footer items={Number(tasks.length)} />
+      </div>
+    </>
   );
 }
 

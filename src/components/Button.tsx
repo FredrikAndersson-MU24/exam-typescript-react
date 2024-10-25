@@ -1,6 +1,6 @@
 interface ButtonProps {
   text: string;
-  onclick: React.MouseEventHandler<HTMLElement> | undefined;
+  onclick?: React.MouseEventHandler<HTMLElement> | undefined;
   class: string;
 }
 
