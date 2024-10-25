@@ -84,7 +84,7 @@ function App() {
         </div>
 
         <form
-          action="submit"
+          action="#"
           className="input-card"
           style={showHide ? { display: "flex" } : { display: "none" }}
           onSubmit={handleAddTask}
