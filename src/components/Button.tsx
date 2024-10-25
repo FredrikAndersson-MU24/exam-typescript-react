@@ -2,7 +2,7 @@ interface ButtonProps {
   text: string;
   onclick?: React.MouseEventHandler<HTMLElement> | undefined;
   class: string;
-  type?: string;
+  type?: "submit" | undefined;
 }
 
 const Button = (props: ButtonProps) => {
