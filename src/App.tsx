@@ -82,7 +82,6 @@ function App() {
             })}
           />
         </div>
-
         <form
           className="input-card"
           style={showHide ? { display: "flex" } : { display: "none" }}
